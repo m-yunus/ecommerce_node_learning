@@ -1,48 +1,42 @@
-const express=require('express');
-const app=express();
-require('dotenv/config');
-//bodyparser
-const bodyParser=require('body-parser');
-//morgan for  middleware
-const morgan=require('morgan');
+const express = require('express');
+const app = express();
+require('dotenv').config(); // Fixed to use correct dotenv method
+const bodyParser = require('body-parser');
+const morgan = require('morgan');
+const mongoose = require('mongoose');
 
-
-
-
-
-
-app.use(morgan('tiny'))
+// Middleware
+app.use(morgan('tiny'));
 app.use(bodyParser.json());
 
+// Database connection
+const dbUsername = encodeURIComponent('sanuyoonus');
+const dbPassword = encodeURIComponent('yunus@123'); // Ensure to encode special characters
+const dbCluster = 'cluster0.a1lgpnj';
+const dbName = 'ecommerce_learn';
 
-
-const port=process.env.PORT || 8080;
-const api=process.env.API
-
-
-
-app.get(api+"home",(req,res)=>{
-    const product={
-        name:"Laptop",
-        price:10000,
-        description:"This is a laptop"
+mongoose.connect(
+    `mongodb+srv://${dbUsername}:${dbPassword}@${dbCluster}.mongodb.net/${dbName}?retryWrites=true&w=majority`,
+    {
+        dbName: dbName,
+        useNewUrlParser: true,
+        useUnifiedTopology: true
     }
-    //send json and msg ans status
-   
-  
-    res.status(200).json({ data: product, status: 200 ,msg:"APi Succesfully executed"});
-    console.log(req.headers);
-})
+).then(() => {
+    console.log('Database connection successful');
+}).catch((err) => {
+    console.error('Database connection error:', err); // Improved logging
+});
 
-app.post(api+"product",(req,res)=>{
-const product=req.body;
-  
-    res.status(200).json({ data: req.body, status: 200 ,msg:"APi Succesfully executed"});
-    console.log(product);
-})
+// Routes
+const port = process.env.PORT || 8080;
+const api = process.env.API || '/api';
 
-//listen server
-app.listen(port,(err)=>{
-    if(err) console.log(err);
-    console.log(`server is running on port http://localhost:${port}`);
-    });
+const productRouter = require('./routers/products');
+app.use(`${api}products`, productRouter);
+
+// Server
+app.listen(port, (err) => {
+    if (err) console.error(err);
+    console.log(`Server is running on port http://localhost:${port}`);
+});
