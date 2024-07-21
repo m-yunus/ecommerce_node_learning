@@ -19,8 +19,7 @@ mongoose.connect(
     `mongodb+srv://${dbUsername}:${dbPassword}@${dbCluster}.mongodb.net/${dbName}?retryWrites=true&w=majority`,
     {
         dbName: dbName,
-        useNewUrlParser: true,
-        useUnifiedTopology: true
+     
     }
 ).then(() => {
     console.log('Database connection successful');

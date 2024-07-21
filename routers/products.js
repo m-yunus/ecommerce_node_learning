@@ -21,7 +21,7 @@ router.get("/", async (req, res) => {
         });
     } catch (error) {
         console.error('Error fetching products:', error); // Debugging log
-        res.status(500).json({ message: error.message });
+        res.status(500).json({ message: error.message,succes:false });
     }
 });
 
