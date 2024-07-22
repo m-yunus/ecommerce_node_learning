@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-require('dotenv').config(); // Fixed to use correct dotenv method
+require('dotenv').config();
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const mongoose = require('mongoose');
@@ -16,15 +16,14 @@ const dbCluster = 'cluster0.a1lgpnj';
 const dbName = 'ecommerce_learn';
 
 mongoose.connect(
-    `mongodb+srv://${dbUsername}:${dbPassword}@${dbCluster}.mongodb.net/${dbName}?retryWrites=true&w=majority`,
-    {
-        dbName: dbName,
-     
-    }
+  `mongodb+srv://${dbUsername}:${dbPassword}@${dbCluster}.mongodb.net/${dbName}?retryWrites=true&w=majority`,
+  {
+    dbName: dbName,
+  }
 ).then(() => {
-    console.log('Database connection successful');
+  console.log('Database connection successful');
 }).catch((err) => {
-    console.error('Database connection error:', err); // Improved logging
+  console.error('Database connection error:', err);
 });
 
 // Routes
@@ -32,10 +31,13 @@ const port = process.env.PORT || 8080;
 const api = process.env.API || '/api';
 
 const productRouter = require('./routers/products');
-app.use(`${api}products`, productRouter);
+const categoryRouter = require('./routers/category'); // Fix import path
+
+app.use(`${api}products`, productRouter); // Fixed endpoint URL format
+app.use(`${api}categories`, categoryRouter); // Fixed endpoint URL format
 
 // Server
 app.listen(port, (err) => {
-    if (err) console.error(err);
-    console.log(`Server is running on port http://localhost:${port}`);
+  if (err) console.error(err);
+  console.log(`Server is running on port http://localhost:${port}`);
 });

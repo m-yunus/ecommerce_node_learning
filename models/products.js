@@ -1,17 +1,29 @@
 const mongoose = require('mongoose');
 
 // schema
-const productSchema = new mongoose.Schema({
+const categorySchema = new mongoose.Schema(
+  {
     name: {
- type: String,
- required: true,
- 
+      type: String,
+      required: true,
     },
-    price: Number,
-    image: String
-}, {
-    timestamps: true
-});
+    image: {
+      type: String,
+      default: "",
+    },
+    color: {
+      type: String,
+      default: "",
+    },
+    icon: {
+      type: String,
+      default: "",
+    }
+  },
+  {
+    timestamps: true, // Add timestamps to automatically manage `createdAt` and `updatedAt`
+  }
+);
 
 // model
-module.exports = mongoose.model('Product', productSchema);
+module.exports = mongoose.model('Category', categorySchema);
