@@ -3,28 +3,28 @@ const mongoose = require("mongoose");
 // schema
 const categorySchema = new mongoose.Schema(
   {
-    id: {
-      type: String,
-    },
+
     name: {
       type: String,
       required: true,
     },
-    
     image: {
       type: String,
-      default: "",
+
     },
-    color:{
-        type: String,
-        default: "",
+    color: {
+      type: String,
+
     },
-    icon:{
-        type: String,
-        default: "",
+    icon: {
+      type: String,
+
     }
-}
+  },
+  {
+    timestamps: true, // Add timestamps to automatically manage `createdAt` and `updatedAt`
+  }
 );
 
 // model
-module.exports = mongoose.model("categories", categorySchema);
+module.exports = mongoose.model("categories", categorySchema); // Fixed model name to singular
