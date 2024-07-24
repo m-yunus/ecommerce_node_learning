@@ -7,18 +7,19 @@ const categorySchema = new mongoose.Schema(
     name: {
       type: String,
       required: true,
+      default:''
     },
     image: {
       type: String,
-
+  default:''
     },
     color: {
       type: String,
-
+  default:''
     },
     icon: {
       type: String,
-
+  default:''
     }
   },
   {
