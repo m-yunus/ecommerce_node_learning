@@ -15,6 +15,7 @@ router.get("/", async (req, res) => {
                 name: item.name,
                 price: item.price,
                 image: item.image,
+                category:item.category,
                 createdAt: item.createdAt
             })),
             message: 'Products fetched successfully'
@@ -30,7 +31,8 @@ router.post("/", async (req, res) => {
     const product = new Product({
         name: req.body.name,
         price: req.body.price,
-        image: req.body.image
+        image: req.body.image,
+        category:req.body.category
     });
 
     try {
@@ -46,5 +48,28 @@ router.post("/", async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 });
+
+router.get('/specific',async (req,res)=>{
+    try {
+        const product=await Product.find().select('name image -_id')
+res.json({data:product,status:200}).status(200)
+    } catch (error) {
+        console.log(error);
+        res.json({data:error,status:500}).status(500)
+    }
+})
+//get a single product
+router.get('/:id', async (req, res) => {
+    try {
+      const product = await Product.findById(req.params.id).populate('category', 'name image color icon -_id');
+      if (!product) {
+        return res.status(404).json({ data: 'Product not found', status: 404 });
+      }
+      res.status(200).json({ data: product, status: 200 });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ data: error.message, status: 500 });
+    }
+  });
 
 module.exports = router;
