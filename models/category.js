@@ -1,31 +1,28 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
-// schema
-const categorySchema = new mongoose.Schema(
+// Category schema
+const CategorySchema = new mongoose.Schema(
   {
-
     name: {
       type: String,
       required: true,
-      default:''
     },
     image: {
       type: String,
-  default:''
+      default: "",
     },
     color: {
       type: String,
-  default:''
+      default: "",
     },
     icon: {
       type: String,
-  default:''
-    }
+      default: "",
+    },
   },
   {
-    timestamps: true, // Add timestamps to automatically manage `createdAt` and `updatedAt`
+    timestamps: true,
   }
 );
 
-// model
-module.exports = mongoose.model("categories", categorySchema); // Fixed model name to singular
+module.exports = mongoose.model('categories', CategorySchema); // Ensures the collection name is 'categories'

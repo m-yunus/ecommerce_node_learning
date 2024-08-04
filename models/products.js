@@ -1,34 +1,62 @@
 const mongoose = require('mongoose');
 
-// schema
-const categorySchema = new mongoose.Schema(
-  {
+const productSchema = mongoose.Schema({
     name: {
-      type: String,
-      required: true,
+        type: String,
+        required: true,
+    },
+    description: {
+        type: String,
+        required: true
+    },
+    richDescription: {
+        type: String,
+        default: ''
     },
     image: {
-      type: String,
-      default: "",
+        type: String,
+        default: ''
     },
-    color: {
-      type: String,
-      default: "",
+    images: [{
+        type: String
+    }],
+    brand: {
+        type: String,
+        default: ''
     },
-    icon: {
-      type: String,
-      default: "",
+    price : {
+        type: Number,
+        default:0
     },
     category: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Category',
-      required: true,
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'categories',
+        required:true
     },
-  },
-  {
-    timestamps: true, // Add timestamps to automatically manage `createdAt` and `updatedAt`
-  }
-);
+    countInStock: {
+        type: Number,
+        required: true,
+        min: 0,
+        max: 255
+    },
+    rating: {
+        type: Number,
+        default: 0,
+    },
+    numReviews: {
+        type: Number,
+        default: 0,
+    },
+    isFeatured: {
+        type: Boolean,
+        default: false,
+    },
+    dateCreated: {
+        type: Date,
+        default: Date.now,
+    },
+})
 
-// model
-module.exports = mongoose.model('Category', categorySchema);
+
+
+module.exports = mongoose.model('products', productSchema);

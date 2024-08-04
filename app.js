@@ -38,11 +38,14 @@ const productRouter = require('./routers/products');
 const categoryRouter = require('./routers/category'); // Fix import path
 const SignupRouter = require('./routers/Signup');
 const LoginRouter = require('./routers/Login');
+//mail route
+const mailRouter = require('./routers/sendmail');
 
 app.use(`${api}signup`,SignupRouter);
 app.use(`${api}login`,LoginRouter);
 app.use(`${api}products`,userAuth, productRouter); // Fixed endpoint URL format
 app.use(`${api}categories`,userAuth, categoryRouter); // Fixed endpoint URL format
+app.use(`${api}sendmail`,mailRouter); // Fixed endpoint URL format
 // Server
 app.listen(port, (err) => {
   if (err) console.error(err);
