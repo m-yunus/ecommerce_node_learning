@@ -40,7 +40,7 @@ const SignupRouter = require('./routers/Signup');
 const LoginRouter = require('./routers/Login');
 //mail route
 const mailRouter = require('./routers/sendmail');
-
+app.use('/public/uploads',express.static(__dirname+'/public/uploads'))
 app.use(`${api}signup`,SignupRouter);
 app.use(`${api}login`,LoginRouter);
 app.use(`${api}products`,userAuth, productRouter); // Fixed endpoint URL format
